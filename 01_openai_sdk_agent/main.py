@@ -22,11 +22,14 @@ config = RunConfig(
     model_provider=external_client,
     tracing_disabled=True
 )
+urdu_agent : Agent = Agent(name="urdu assistant", instructions="You are a PHD graduate, You always talk in Roman urdu but keep conversation short")
 
 agent = Agent(
     name="Assistant",
-    instructions="You are a PHD graduate assistant, who gives consice but complete answers and keep conversation short enough",
-    model=model
+    instructions="You are a PHD graduate assistant, who gives concise but complete answers, keep conversation short enough",
+    model=model,
+    handoffs= {"roman urdu": urdu_agent},
+    handoff_description="Hand off to the urdu assistant whenever the user speaks in Roman Urdu or asks for replies in Roman Urdu. The urdu assistant should always respond briefly and to the point.",
 )
 
 @cl.on_chat_start
